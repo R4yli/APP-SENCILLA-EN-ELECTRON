@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Nuevo producto</title>
+    <link rel="stylesheet" href="./bootstrap.min.css">
+  </head>
+  <body>
+
+    <!-- Interfaz -->
+    <form class="p-4">
+      <div class="form-group">
+        <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto" autofocus>
+      </div>
+      <div class="form-group">
+        <input type="text" id="precio" class="form-control" placeholder="precio">
+      </div>
+      <div class="form-group">
+        <input type="text" id="descripcion" class="form-control" placeholder="descripcion">
+      </div>
+      <button class="btn btn-primary btn-block">
+        Guardar
+      </button>
+    </form>
+
+    <!-- Logica -->
+    <script>
+      const { ipcRenderer } = require('electron');
+
+      const form = document.querySelector('form');
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const nameProduct = document.querySelector('#nombre').value;
+        const priceProduct = document.querySelector('#precio').value;
+        const descProduct = document.querySelector('#descripcion').value;
+
+        const newProduct = {
+          name: nameProduct,
+          price: priceProduct,
+          description: descProduct
+        };
+
+        ipcRenderer.send('product:new', newProduct);
+      });
+
+    </script>
+
+  </body>
+</html>
